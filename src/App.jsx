@@ -51,7 +51,7 @@ function App() {
             <p>© 2025 Ajou Campus Foodmap | Made with React</p>
           </footer>
         </div>
-        <ToastContainer 
+        <ToastContainer
           position="bottom-right"
           autoClose={3000}
           hideProgressBar={false}

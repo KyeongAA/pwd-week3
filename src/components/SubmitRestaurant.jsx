@@ -126,7 +126,7 @@ function SubmitRestaurant() {
   const onSubmit = async (data) => {
     try {
       // Netlify Forms로 제출
-      const response = await fetch("/", {
+      const response = await fetch("${API_BASE_URL}/api/restaurants", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
@@ -134,7 +134,7 @@ function SubmitRestaurant() {
           ...data
         }).toString()
       });
-      
+
       if (response.ok) {
         setSubmitted(true);
         toast.success('맛집이 성공적으로 제보되었습니다! 🎉');
@@ -164,10 +164,10 @@ function SubmitRestaurant() {
   return (
     <FormContainer>
       <FormTitle>🍽️ 새로운 맛집 제보하기</FormTitle>
-      
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="hidden" name="form-name" value="restaurant-submit" />
-        
+
         <FormGroup>
           <Label htmlFor="restaurantName">맛집 이름 *</Label>
           <Input
