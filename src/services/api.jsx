@@ -1,7 +1,7 @@
 //src/services/api.jsx
 import axios from 'axios';
 
-const DEFAULT_BASE_URL = 'https://pwd-week4-kyeongaa.onrender.com';
+const DEFAULT_BASE_URL = 'https://pwd-week5-kyeongaa.onrender.com';
 const rawBaseUrl = import.meta.env?.VITE_API_BASE_URL || DEFAULT_BASE_URL;
 const API_BASE_URL = rawBaseUrl.endsWith('/') ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
 
