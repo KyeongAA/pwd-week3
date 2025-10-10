@@ -1,11 +1,9 @@
-/* src/components/SubmitRestaurant.jsx */
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { toast } from 'react-toastify';
+import { submissionAPI } from '../services/api';
 import { FaCheckCircle } from 'react-icons/fa';
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'https://pwd-week5-kyeongaa.onrender.com';
 
 const FormContainer = styled.div`
   background: white;
@@ -127,19 +125,31 @@ function SubmitRestaurant() {
 
   const onSubmit = async (data) => {
     try {
-      // Netlify Forms로 제출
-      const response = await fetch(`${API_BASE_URL}/api/restaurants`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+      const recommendedMenuArray = typeof data.recommendedMenu === 'string'
+        ? data.recommendedMenu
+          .split(/[\n,]/)
+          .map((item) => item.trim())
+          .filter(Boolean)
+        : Array.isArray(data.recommendedMenu)
+          ? data.recommendedMenu
+          : [];
 
-      if (response.ok) {
-        setSubmitted(true);
-        toast.success('맛집이 성공적으로 제보되었습니다! 🎉');
-        reset();
-        setTimeout(() => setSubmitted(false), 5000);
-      }
+      const payload = {
+        restaurantName: data.restaurantName?.trim(),
+        category: data.category,
+        location: data.location?.trim(),
+        priceRange: data.priceRange?.trim() || undefined,
+        recommendedMenu: recommendedMenuArray.length ? recommendedMenuArray : undefined,
+        review: data.review?.trim() || undefined,
+        submitterName: data.submitterName?.trim() || undefined,
+        submitterEmail: data.submitterEmail?.trim() || undefined,
+      };
+
+      await submissionAPI.createSubmission(payload);
+      setSubmitted(true);
+      toast.success('맛집이 성공적으로 제보되었습니다! 🎉');
+      reset();
+      setTimeout(() => setSubmitted(false), 5000);
     } catch (error) {
       toast.error('제출 중 오류가 발생했습니다.');
     }
@@ -165,7 +175,6 @@ function SubmitRestaurant() {
       <FormTitle>🍽️ 새로운 맛집 제보하기</FormTitle>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="hidden" name="form-name" value="restaurant-submit" />
 
         <FormGroup>
           <Label htmlFor="restaurantName">맛집 이름 *</Label>
@@ -235,6 +244,7 @@ function SubmitRestaurant() {
             placeholder="예: 치즈닭갈비, 막국수, 볶음밥"
           />
         </FormGroup>
+
 
         <FormGroup>
           <Label htmlFor="review">한줄평</Label>
