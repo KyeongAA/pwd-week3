@@ -1,11 +1,13 @@
 //src/services/api.jsx
-console.log('🧩 VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-console.log('🧩 API_BASE_URL:', API_BASE_URL);
+
 import axios from 'axios';
 
 const DEFAULT_BASE_URL = 'https://pwd-week5-kyeongaa.onrender.com';
 const rawBaseUrl = import.meta.env?.VITE_API_BASE_URL || DEFAULT_BASE_URL;
 const API_BASE_URL = rawBaseUrl.endsWith('/') ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
+
+console.log('🧩 VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
+console.log('🧩 API_BASE_URL:', API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
