@@ -128,7 +128,7 @@ function SubmitRestaurant() {
   const onSubmit = async (data) => {
     try {
       // Netlify Forms로 제출
-      const response = await fetch('${API_BASE_URL}/api/restaurants', {
+      const response = await fetch(`${API_BASE_URL}/api/restaurants`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
