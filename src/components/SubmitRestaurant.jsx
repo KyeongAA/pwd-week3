@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { toast } from 'react-toastify';
 import { FaCheckCircle } from 'react-icons/fa';
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'https://pwd-week5-kyeongaa.onrender.com';
 
 const FormContainer = styled.div`
   background: white;
@@ -126,7 +128,7 @@ function SubmitRestaurant() {
   const onSubmit = async (data) => {
     try {
       // Netlify Forms로 제출
-      const response = await fetch("${API_BASE_URL}/api/restaurants", {
+      const response = await fetch('${API_BASE_URL}/api/restaurants', {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
